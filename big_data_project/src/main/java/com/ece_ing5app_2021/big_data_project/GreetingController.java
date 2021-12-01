@@ -1,8 +1,12 @@
 package com.ece_ing5app_2021.big_data_project;
 
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.*;
+import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,11 +22,21 @@ public class GreetingController {
 
 		String path = this.getClass()
 		  .getClassLoader()
-		  .getResource("conf/hbase-site.xml")
+		  .getResource("hbase-site.xml")
 		  .getPath();
 		config.addResource(new Path(path));
-		
-		HBaseAdmin.checkHBaseAvailable(config);
+		try {
+			HBaseAdmin.available(config);
+		} catch (MasterNotRunningException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ZooKeeperConnectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
