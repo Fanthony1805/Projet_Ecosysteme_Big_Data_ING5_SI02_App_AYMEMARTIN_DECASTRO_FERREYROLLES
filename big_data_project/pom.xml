@@ -14,7 +14,7 @@
 	<name>big_data_project</name>
 	<description>Big Data Project - Java HBase microservice</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
