@@ -2,7 +2,9 @@ package com.ece_ing5app_2021.big_data_project;
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.MasterNotRunningException;
 import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.ZooKeeperConnectionException;
 import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
@@ -13,7 +15,7 @@ import java.io.IOException;
 
 public class HbaseConnector {
 
-    public static Connection getConnectionByFile( String keyTabPath, String krbConfPath, String hbaseSitePath, String principal) throws IOException {
+    public static Connection getConnectionByFile( String keyTabPath, String krbConfPath, String hbaseSitePath, String principal) throws IOException, MasterNotRunningException, ZooKeeperConnectionException  {
 
         // krb5.conf
         System.setProperty("java.security.krb5.conf", krbConfPath);

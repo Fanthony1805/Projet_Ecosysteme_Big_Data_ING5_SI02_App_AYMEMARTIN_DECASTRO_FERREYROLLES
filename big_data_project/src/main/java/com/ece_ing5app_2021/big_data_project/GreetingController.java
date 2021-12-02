@@ -21,10 +21,15 @@ public class GreetingController {
 	public Greeting greeting(@RequestParam(value = "name", defaultValue = "Anthony") String name) {
 		 try {
 			Connection connection = HbaseConnector.getConnectionByFile("/etc/security/keytabs/hbase.service.keytab", "krb5.conf", "hbase-site.xml", "hbase/_HOST@AU.ADALTAS.CLOUD");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		 } catch (MasterNotRunningException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ZooKeeperConnectionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 		/*Configuration config = HBaseConfiguration.create();
 		
 		String path = this.getClass()
