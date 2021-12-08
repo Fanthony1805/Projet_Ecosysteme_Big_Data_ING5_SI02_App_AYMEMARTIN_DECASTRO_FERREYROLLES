@@ -37,9 +37,9 @@ public class HbaseConnector {
              
  		Admin admin = connection.getAdmin();
         if (admin.tableExists(TableName.valueOf("tonseal:tonseal_table"))) {
-            System.out.println("表tonseal:tonseal_table存在");
+            System.out.println("tonseal:tonseal_table");
         } else {
-            System.err.println("表tonseal:tonseal_table不存在");
+            System.err.println("tonseal:tonseal_table");
         }
         admin.close();
         connection.close();

@@ -15,7 +15,7 @@ public class GreetingController {
 	@GetMapping("/greeting")
 	public Greeting greeting(@RequestParam(value = "name", defaultValue = "Anthony") String name) {
 		 try {
-			HbaseConnector.getConnectionByFile("/etc/security/keytabs/hbase.service.keytab", "krb5.conf", "hbase-site.xml", "hbase/_HOST@AU.ADALTAS.CLOUD");
+			HbaseConnector.getConnectionByFile("/etc/security/keytabs/hbase.service.keytab", "krb5.conf", "hbase-site.xml", "anthony.ferreyrolles-ece@AU.ADALTAS.CLOUD");
 		 } catch (MasterNotRunningException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
