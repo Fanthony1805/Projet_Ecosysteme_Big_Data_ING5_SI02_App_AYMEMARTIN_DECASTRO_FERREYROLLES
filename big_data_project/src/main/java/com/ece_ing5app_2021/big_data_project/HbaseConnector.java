@@ -15,13 +15,14 @@ import java.io.IOException;
 
 public class HbaseConnector {
 
-    public static Connection getConnectionByFile( String keyTabPath, String krbConfPath, String hbaseSitePath, String principal) throws IOException, MasterNotRunningException, ZooKeeperConnectionException  {
+    public static Connection getConnectionByFile( String keyTabPath, String coresite, String krbConfPath, String hbaseSitePath, String principal) throws IOException, MasterNotRunningException, ZooKeeperConnectionException  {
 
         // krb5.conf
         System.setProperty("java.security.krb5.conf", krbConfPath);
 
         org.apache.hadoop.conf.Configuration conf = HBaseConfiguration.create();
         conf.addResource(new Path(hbaseSitePath));
+        conf.addResource(new Path(coresite));
 
         UserGroupInformation.setConfiguration(conf);
 
