@@ -25,7 +25,6 @@ public class HbaseConnector {
         conf.addResource(new Path(coresite));
 
         UserGroupInformation.setConfiguration(conf);
-        UserGroupInformation.
         UserGroupInformation.loginUserFromKeytab(principal, keyTabPath);
         Connection connection = ConnectionFactory.createConnection(conf);
         HBaseAdmin.available(conf);
