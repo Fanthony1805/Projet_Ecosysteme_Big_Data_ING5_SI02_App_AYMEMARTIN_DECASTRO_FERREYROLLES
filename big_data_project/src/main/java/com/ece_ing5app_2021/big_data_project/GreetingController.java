@@ -20,6 +20,7 @@ public class GreetingController {
 	private static final String template = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
 
+	@SuppressWarnings("finally")
 	@GetMapping("/greeting")
 	public String greeting(@RequestParam(value = "name", defaultValue = "Anthony") String name) {
 		Connection conn;
@@ -41,7 +42,10 @@ public class GreetingController {
 		      
 		      byte[] value = result.getValue(Bytes.toBytes("user"), Bytes.toBytes("username"));
 		      String valueStr = Bytes.toString(value);
+		      
+		      System.out.println("value : " + value);
 
+		      System.out.println("valueStr : " + valueStr);
 		      return valueStr;	
 		 } catch (MasterNotRunningException e) {
 				e.printStackTrace();
@@ -50,7 +54,8 @@ public class GreetingController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+				return "tamer";
+
 		
-		return null;
 	}
 }
