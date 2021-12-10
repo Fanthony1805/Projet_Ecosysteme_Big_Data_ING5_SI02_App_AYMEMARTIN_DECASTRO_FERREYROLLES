@@ -105,15 +105,18 @@ public class GreetingController {
 
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
 			// Instantiating Get class
-			Delete delete = new Delete(Bytes.toBytes("user"));
+			/*Delete delete = new Delete(Bytes.toBytes("user"));
 			
-			table.delete(delete);
+			table.delete(delete);*/
+			
+			Admin admin = conn.getAdmin();
+			admin.deleteColumnFamily(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"), Bytes.toBytes("user"));
 			
 			return "Row successfully deleted\n";
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "Couldn't add the value\n";
+		return "Couldn't delete the row\n";
 	}
 }
