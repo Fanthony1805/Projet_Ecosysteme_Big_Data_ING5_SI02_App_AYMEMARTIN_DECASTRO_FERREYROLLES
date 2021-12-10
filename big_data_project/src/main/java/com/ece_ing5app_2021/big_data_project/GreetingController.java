@@ -21,7 +21,7 @@ public class GreetingController {
 	private final AtomicLong counter = new AtomicLong();
 
 	@GetMapping("/greeting")
-	public Result greeting(@RequestParam(value = "name", defaultValue = "Anthony") String name) {
+	public String greeting(@RequestParam(value = "name", defaultValue = "Anthony") String name) {
 		Connection conn;
 		
 		 try {
@@ -35,11 +35,14 @@ public class GreetingController {
 		      
 		     // Instantiating Get class
 		      Get g = new Get(Bytes.toBytes("user"));
-
-		      // Reading the data
+		      
+		   // Reading the data
 		      Result result = table.get(g);
 		      
-		      return result;	
+		      byte[] value = result.getValue(Bytes.toBytes("username"), Bytes.toBytes("user"));
+		      String valueStr = Bytes.toString(value);
+
+		      return valueStr;	
 		 } catch (MasterNotRunningException e) {
 				e.printStackTrace();
 			} catch (ZooKeeperConnectionException e) {
