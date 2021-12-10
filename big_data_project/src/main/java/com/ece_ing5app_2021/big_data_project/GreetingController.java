@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
@@ -86,6 +87,29 @@ public class GreetingController {
 			table.put(put);
 			
 			return "Value successfully added\n";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "Couldn't add the value\n";
+	}
+	
+	@GetMapping("/delete_row")
+	public String deleteRow() {
+		// Instantiating HTable class
+		Table table;
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			// Instantiating Get class
+			Delete delete = new Delete(Bytes.toBytes("user"));
+			
+			table.delete(delete);
+			
+			return "Row successfully deleted\n";
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
