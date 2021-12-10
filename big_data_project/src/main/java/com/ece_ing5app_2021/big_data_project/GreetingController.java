@@ -123,7 +123,7 @@ public class GreetingController {
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
 			
 			Admin admin = conn.getAdmin();
-			admin.deleteColumnFamily(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"), Bytes.toBytes("anthony"));
+			admin.deleteColumnFamily(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"), Bytes.toBytes("username"));
 			
 			return "Column family successfully deleted\n";
 		} catch (IOException e) {
