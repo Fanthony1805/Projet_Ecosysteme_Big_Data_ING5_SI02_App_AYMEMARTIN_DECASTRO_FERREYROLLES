@@ -39,7 +39,7 @@ public class GreetingController {
 		   // Reading the data
 		      Result result = table.get(g);
 		      
-		      byte[] value = result.getValue(Bytes.toBytes("username"), Bytes.toBytes("user"));
+		      byte[] value = result.getValue(Bytes.toBytes("user"), Bytes.toBytes("username"));
 		      String valueStr = Bytes.toString(value);
 
 		      return valueStr;	
