@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GreetingController {
 	private static Connection conn;
+	// Instantiating HTable class
+	private static Table table;
 
 	@GetMapping("/try_connection")
 	public String greeting(@RequestParam(value = "name", defaultValue = "Anthony") String name) {
@@ -41,8 +43,6 @@ public class GreetingController {
 
 	@GetMapping("/get_values")
 	public String getValues() {
-		// Instantiating HTable class
-		Table table;
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -71,8 +71,6 @@ public class GreetingController {
 	
 	@GetMapping("/put_values")
 	public String putValues() {
-		// Instantiating HTable class
-		Table table;
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -96,8 +94,6 @@ public class GreetingController {
 	
 	@GetMapping("/delete_row")
 	public String deleteRow() {
-		// Instantiating HTable class
-		Table table;
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -105,12 +101,9 @@ public class GreetingController {
 
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
 			// Instantiating Get class
-			/*Delete delete = new Delete(Bytes.toBytes("user"));
+			Delete delete = new Delete(Bytes.toBytes("user"));
 			
-			table.delete(delete);*/
-			
-			Admin admin = conn.getAdmin();
-			admin.deleteColumnFamily(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"), Bytes.toBytes("user"));
+			table.delete(delete);
 			
 			return "Row successfully deleted\n";
 		} catch (IOException e) {
@@ -118,5 +111,25 @@ public class GreetingController {
 			e.printStackTrace();
 		}
 		return "Couldn't delete the row\n";
+	}
+	
+	@GetMapping("/delete_columnfamily")
+	public String deleteColumnFamily() {
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			Admin admin = conn.getAdmin();
+			admin.deleteColumnFamily(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"), Bytes.toBytes("anthony"));
+			
+			return "Column family successfully deleted\n";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "Couldn't delete the column family\n";
 	}
 }
