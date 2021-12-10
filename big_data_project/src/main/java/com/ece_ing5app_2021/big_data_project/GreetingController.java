@@ -17,34 +17,12 @@ public class GreetingController {
 		 try {
 			HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab","/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml", "a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
 		 } catch (MasterNotRunningException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ZooKeeperConnectionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		/*Configuration config = HBaseConfiguration.create();
-		
-		String path = this.getClass()
-		  .getClassLoader()
-		  .getResource("hbase-site.xml")
-		  .getPath();
-		config.addResource(new Path(path));
-		try {
-			HBaseAdmin.available(config);
-		} catch (MasterNotRunningException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ZooKeeperConnectionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		
 		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
