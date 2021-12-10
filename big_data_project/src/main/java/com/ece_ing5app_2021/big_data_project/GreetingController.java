@@ -26,7 +26,7 @@ public class GreetingController {
 
 			Admin admin = conn.getAdmin();
 			
-			return "Connection success: " + admin.tableExists(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			return "Connection success: " + admin.tableExists(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles")) + "\n";
 		} catch (MasterNotRunningException e) {
 			e.printStackTrace();
 		} catch (ZooKeeperConnectionException e) {
@@ -34,7 +34,7 @@ public class GreetingController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "Connection Failed";
+		return "Connection Failed\n";
 	}
 
 	@GetMapping("/get_values")
@@ -59,11 +59,11 @@ public class GreetingController {
 			System.out.println("value : " + value);
 
 			System.out.println("valueStr : " + valueStr);
-			return valueStr;
+			return valueStr + "\n";
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "Couldn't get values";
+		return "Couldn't get values\n";
 	}
 }
