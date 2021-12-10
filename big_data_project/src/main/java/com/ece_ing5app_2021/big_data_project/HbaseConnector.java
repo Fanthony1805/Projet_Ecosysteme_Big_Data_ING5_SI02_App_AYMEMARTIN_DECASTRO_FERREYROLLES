@@ -31,21 +31,6 @@ public class HbaseConnector {
         Connection connection = ConnectionFactory.createConnection(conf);
         HBaseAdmin.available(conf);
         
-        Admin admin = connection.getAdmin();
-        admin.tableExists(TableName.valueOf("myTable"));
-        
-        HTableDescriptor table = new HTableDescriptor(TableName.valueOf("myTable"));
-        table.addFamily(new HColumnDescriptor("myFamily"));
-        
-        try
-        {
-        	admin.createTable(table);
-        	System.out.println(" Table created ");
-        } catch (Exception e) {
-        	System.out.println(" Table wasn't created ");
-        	System.out.println(e.toString());
-        }
-        
         return connection;
     }
 }
