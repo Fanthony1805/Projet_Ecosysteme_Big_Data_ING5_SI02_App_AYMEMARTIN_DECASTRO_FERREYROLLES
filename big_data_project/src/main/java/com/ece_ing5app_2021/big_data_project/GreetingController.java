@@ -6,6 +6,7 @@ import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Get;
+import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -65,5 +66,30 @@ public class GreetingController {
 			e.printStackTrace();
 		}
 		return "Couldn't get values\n";
+	}
+	
+	@GetMapping("/put_values")
+	public String putValues() {
+		// Instantiating HTable class
+		Table table;
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			// Instantiating Get class
+			Put put = new Put(Bytes.toBytes("user"));
+			put.addColumn(Bytes.toBytes("username"), Bytes.toBytes(""), Bytes.toBytes("awesomeValue"));
+			//Add as many columns as you want
+
+			table.put(put);
+			
+			return "Value successfully added\n";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "Couldn't add the value\n";
 	}
 }
