@@ -12,6 +12,8 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +24,7 @@ public class UserController {
 	private static int userID;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/user")
-	public String createUser(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
+	public String createUser(@RequestBody String username, @RequestBody String email, @RequestBody String password) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -79,8 +81,8 @@ public class UserController {
 		return false;
 	}
 	
-	@GetMapping("/get_user")
-	public static Array getUser(@RequestParam String userID) {
+	@GetMapping("/user/{id}")
+	public static Array getUser(@PathVariable String id) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -88,7 +90,7 @@ public class UserController {
 
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
 			
-			Get g = new Get(Bytes.toBytes(userID));
+			Get g = new Get(Bytes.toBytes(id));
 
 			Result result = table.get(g);
 
@@ -101,12 +103,13 @@ public class UserController {
 			value = result.getValue(Bytes.toBytes("user"), Bytes.toBytes("password"));
 			String user_password = Bytes.toString(value);
 			
+			System.out.println("username = " + username);
+			
 			return (Array) Arrays.asList(
 			        username,
 			        user_email,
 			        user_password);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
