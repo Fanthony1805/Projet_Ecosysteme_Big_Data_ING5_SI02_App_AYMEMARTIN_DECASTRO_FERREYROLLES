@@ -61,13 +61,15 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login", headers="Accept=application/json")
-	public Boolean loginUser(@RequestBody String username, @RequestBody String password) {
+	public Boolean loginUser(@RequestBody User user) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
 					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
 
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			String username = User.getName();
 			
 			Get g = new Get(Bytes.toBytes(username));
 
@@ -76,7 +78,7 @@ public class UserController {
 			byte[] value = result.getValue(Bytes.toBytes("user"), Bytes.toBytes("password"));
 			String user_password = Bytes.toString(value);
 			
-			return user_password.equals(password);
+			return user_password.equals(User.getPassword());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
