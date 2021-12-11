@@ -84,9 +84,9 @@ public class UserController {
 			String user_password = Bytes.toString(value);
 			
 			System.out.println("Pass 1 = " + user_password);
-			System.out.println("Pass 2 = " + user.get("username").toString());
+			System.out.println("Pass 2 = " + user.get("password").toString());
 			
-			return user_password.equals(user.get("username").toString());
+			return user_password.equals(user.get("password").toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
