@@ -30,12 +30,15 @@ public class CounterController {
 			Result result = table.get(g);
 
 			byte[] value = result.getValue(Bytes.toBytes("user"), Bytes.toBytes("nb_user"));
+			System.out.println(Bytes.toString(value));
 			Counter.setNb_user(Integer.parseInt(Bytes.toString(value)));
 			
 			value = result.getValue(Bytes.toBytes("channel"), Bytes.toBytes("nb_channel"));
+			System.out.println(Bytes.toString(value));
 			Counter.setNb_channel(Integer.parseInt(Bytes.toString(value)));
 			
 			value = result.getValue(Bytes.toBytes("message"), Bytes.toBytes("nb_message"));
+			System.out.println(Bytes.toString(value));
 			Counter.setNb_message(Integer.parseInt(Bytes.toString(value)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
