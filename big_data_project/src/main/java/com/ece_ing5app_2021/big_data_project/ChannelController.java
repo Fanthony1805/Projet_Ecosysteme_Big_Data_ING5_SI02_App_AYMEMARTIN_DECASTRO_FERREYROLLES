@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 @RestController
 public class ChannelController {
 	private static Connection conn;
@@ -41,17 +44,14 @@ public class ChannelController {
 			
 			int channelID = Counter.getNb_user();
 			
-			Array user = UserController.getUser(userID);
-			String username = "";
-			try {
-				username = (String) user.getArray(0, 1);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			JsonObject user = UserController.getUser(userID);
+			
+			JsonElement username = null;
+			
+			username = user.get("username");
 			
 			put = new Put(Bytes.toBytes("u" + userID +"_c" + channelID));
-			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(username));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(username.toString()));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("channelname"), Bytes.toBytes(channelname));
 			//Add as many columns as you want
 
