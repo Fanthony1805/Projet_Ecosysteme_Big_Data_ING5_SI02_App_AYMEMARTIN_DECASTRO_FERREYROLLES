@@ -26,7 +26,7 @@ public class UserController {
 	private static int userID;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/user")
-	public String createUser(@RequestBody String username, @RequestBody String email, @RequestBody String password) {
+	public String createUser(@RequestParam(value="username") String username, @RequestParam(value="email") String email, @RequestParam(value="password") String password) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -61,7 +61,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login")
-	public Boolean loginUser(@RequestParam String username, @RequestParam String password) {
+	public Boolean loginUser(@RequestParam(value="username") String username, @RequestParam(value="password") String password) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
