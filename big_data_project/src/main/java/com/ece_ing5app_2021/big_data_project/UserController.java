@@ -3,6 +3,7 @@ package com.ece_ing5app_2021.big_data_project;
 import java.io.IOException;
 import java.sql.Array;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
@@ -88,7 +89,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/user/{id}")
-	public static JsonObject getUser(@PathVariable String id) {
+	public static HashMap<String,Object> getUser(@PathVariable String id) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -111,12 +112,12 @@ public class UserController {
 			
 			System.out.println("username = " + username);
 			
-			JsonObject json = new JsonObject();
-			json.addProperty("username", username);
-		    json.addProperty("email", user_email);
-		    json.addProperty("password", user_password);
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("username", username);
+		    map.put("email", user_email);
+		    map.put("password", user_password);
 			
-			return json;
+			return map;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

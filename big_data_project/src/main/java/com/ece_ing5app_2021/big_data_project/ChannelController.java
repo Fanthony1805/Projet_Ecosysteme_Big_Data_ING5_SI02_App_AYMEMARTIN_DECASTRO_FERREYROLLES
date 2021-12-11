@@ -3,6 +3,7 @@ package com.ece_ing5app_2021.big_data_project;
 import java.io.IOException;
 import java.sql.Array;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
@@ -44,9 +45,9 @@ public class ChannelController {
 			
 			int channelID = Counter.getNb_user();
 			
-			JsonObject user = UserController.getUser(userID);
+			HashMap<String,Object> user = UserController.getUser(userID);
 			
-			JsonElement username = null;
+			Object username = null;
 			
 			username = user.get("username");
 			
