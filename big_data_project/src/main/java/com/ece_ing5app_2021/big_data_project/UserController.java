@@ -61,7 +61,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login", headers="Accept=application/json")
-	public Boolean loginUser(@RequestParam(value="username") String username, @RequestParam(value="password") String password) {
+	public Boolean loginUser(@RequestBody String username, @RequestBody String password) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
