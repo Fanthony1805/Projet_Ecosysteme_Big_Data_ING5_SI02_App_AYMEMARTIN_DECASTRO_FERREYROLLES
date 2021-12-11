@@ -81,7 +81,7 @@ public class UserController {
 			byte[] value = result.getValue(Bytes.toBytes("user"), Bytes.toBytes("password"));
 			String user_password = Bytes.toString(value);
 			
-			return user_password.equals(User.getPassword());
+			return user_password.equals(user.get("username").toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
