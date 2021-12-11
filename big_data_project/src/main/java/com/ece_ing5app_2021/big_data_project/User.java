@@ -1,33 +1,33 @@
 package com.ece_ing5app_2021.big_data_project;
 
 public class User {
-	private final long userID;
-	private final String name;
-	private final String email;
-	private final String password;
-	private final String avatarID;
+	private static long userID = 0;
+	private static String name = "";
+	private static String email = "";
+	private static String password = "";
 	
-	public User(long userID, String name, String email, String password, String avatarID) {
-		super();
-		this.userID = userID;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.avatarID = avatarID;
-	}
-	public long getUserID() {
+	public static long getUserID() {
 		return userID;
 	}
-	public String getName() {
+	public static void setUserID(long userID) {
+		User.userID = userID;
+	}
+	public static String getName() {
 		return name;
 	}
-	public String getEmail() {
+	public static void setName(String name) {
+		User.name = name;
+	}
+	public static String getEmail() {
 		return email;
 	}
-	public String getPassword() {
+	public static void setEmail(String email) {
+		User.email = email;
+	}
+	public static String getPassword() {
 		return password;
 	}
-	public String getAvatarID() {
-		return avatarID;
+	public static void setPassword(String password) {
+		User.password = password;
 	}
 }

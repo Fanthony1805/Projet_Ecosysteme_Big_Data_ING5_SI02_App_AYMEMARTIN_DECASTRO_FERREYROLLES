@@ -1,24 +1,19 @@
 package com.ece_ing5app_2021.big_data_project;
 
 public class Channel {
-	private final long id;
-	private final String name;
-	private final String owners;
+	private static long id;
+	private static String name;
 	
-	public Channel(long id, String name, String owners) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.owners = owners;
-	}
-	
-	public long getId() {
+	public static long getId() {
 		return id;
 	}
-	public String getName() {
+	public static void setId(long id) {
+		Channel.id = id;
+	}
+	public static String getName() {
 		return name;
 	}
-	public String getOwners() {
-		return owners;
+	public static void setName(String name) {
+		Channel.name = name;
 	}
 }
