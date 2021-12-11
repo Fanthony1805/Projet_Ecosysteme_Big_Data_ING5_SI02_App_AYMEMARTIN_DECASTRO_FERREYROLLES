@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.JsonObject;
+
 @RestController
 public class UserController {
 	private static Connection conn;
@@ -86,7 +88,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/user/{id}")
-	public static Array getUser(@PathVariable String id) {
+	public static JsonObject getUser(@PathVariable String id) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -109,10 +111,12 @@ public class UserController {
 			
 			System.out.println("username = " + username);
 			
-			return (Array) Arrays.asList(
-			        username,
-			        user_email,
-			        user_password);
+			JsonObject json = new JsonObject();
+			json.addProperty("username", username);
+		    json.addProperty("email", user_email);
+		    json.addProperty("password", user_password);
+			
+			return json;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
