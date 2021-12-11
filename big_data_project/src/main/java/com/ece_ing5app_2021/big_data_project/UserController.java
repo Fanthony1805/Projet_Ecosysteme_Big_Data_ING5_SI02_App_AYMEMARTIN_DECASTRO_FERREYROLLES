@@ -29,7 +29,7 @@ public class UserController {
 	private static int userID;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/user", headers="Accept=application/json")
-	public String createUser(@RequestParam(value="username") String username, @RequestParam(value="email") String email, @RequestParam(value="password") String password) {
+	public String createUser(@RequestBody HashMap<String,Object> user) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -42,14 +42,14 @@ public class UserController {
 			userID = Counter.getNb_user();
 			
 			Put put = new Put(Bytes.toBytes("u" + (userID + 1)));
-			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(username));
-			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("email"), Bytes.toBytes(email));
-			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("password"), Bytes.toBytes(password));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(user.get("username").toString()));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("email"), Bytes.toBytes(user.get("email").toString()));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("password"), Bytes.toBytes(user.get("password").toString()));
 
 			table.put(put);
 			
-			put = new Put(Bytes.toBytes(username));
-			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("password"), Bytes.toBytes(password));
+			put = new Put(Bytes.toBytes(user.get("username").toString()));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("password"), Bytes.toBytes(user.get("password").toString()));
 			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("ID"), Bytes.toBytes("u" + userID));
 			
 			table.put(put);
@@ -64,7 +64,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login", headers="Accept=application/json")
-	public Boolean loginUser(@RequestBody User user) {
+	public Boolean loginUser(@RequestBody HashMap<String,Object> user) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -72,9 +72,9 @@ public class UserController {
 
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
 			
-			String username = User.getName();
+			Object username = user.get("username");
 			
-			Get g = new Get(Bytes.toBytes(username));
+			Get g = new Get(Bytes.toBytes(username.toString()));
 
 			Result result = table.get(g);
 
