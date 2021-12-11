@@ -54,10 +54,12 @@ public class CounterController {
 
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
 			
+			int value = Counter.getNb_user() + 1;
+			
 			// Instantiating Get class
 			Put put = new Put(Bytes.toBytes("counter"));
 
-			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("nb_user"), Bytes.toBytes(Counter.getNb_user() + 1));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("nb_user"), Bytes.toBytes(Integer.toString(value)));
 			//Add as many columns as you want
 
 			table.put(put);

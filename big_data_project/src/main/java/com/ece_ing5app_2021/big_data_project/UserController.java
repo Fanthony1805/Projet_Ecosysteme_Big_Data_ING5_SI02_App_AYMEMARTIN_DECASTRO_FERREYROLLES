@@ -26,7 +26,7 @@ import com.google.gson.JsonObject;
 public class UserController {
 	private static Connection conn;
 	private static Table table;
-	private static int userID;
+	private static String userID;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/user", headers="Accept=application/json")
 	public String createUser(@RequestBody HashMap<String,Object> user) {
@@ -39,9 +39,11 @@ public class UserController {
 			
 			CounterController.getValues();
 			
-			userID = Counter.getNb_user();
+			userID = "u" + Integer.toString(Counter.getNb_user() + 1);
 			
-			Put put = new Put(Bytes.toBytes("u" + (userID + 1)));
+			
+			
+			Put put = new Put(Bytes.toBytes(userID));
 			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(user.get("username").toString()));
 			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("email"), Bytes.toBytes(user.get("email").toString()));
 			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("password"), Bytes.toBytes(user.get("password").toString()));
@@ -50,7 +52,7 @@ public class UserController {
 			
 			put = new Put(Bytes.toBytes(user.get("username").toString()));
 			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("password"), Bytes.toBytes(user.get("password").toString()));
-			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("ID"), Bytes.toBytes("u" + userID));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("ID"), Bytes.toBytes(userID));
 			
 			table.put(put);
 			
