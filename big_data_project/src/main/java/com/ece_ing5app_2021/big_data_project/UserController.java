@@ -25,7 +25,7 @@ public class UserController {
 	private static Table table;
 	private static int userID;
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/user")
+	@RequestMapping(method = RequestMethod.POST, value = "/user", headers="Accept=application/json")
 	public String createUser(@RequestParam(value="username") String username, @RequestParam(value="email") String email, @RequestParam(value="password") String password) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
@@ -60,7 +60,7 @@ public class UserController {
 		return "Couldn't add the value\n";
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/login")
+	@RequestMapping(method = RequestMethod.POST, value = "/login", headers="Accept=application/json")
 	public Boolean loginUser(@RequestParam(value="username") String username, @RequestParam(value="password") String password) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
