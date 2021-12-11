@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class UserController {
 	private static Connection conn;
 	private static Table table;
@@ -81,7 +83,7 @@ public class UserController {
 		return false;
 	}
 	
-	@GetMapping("/user/{id}")
+	@RequestMapping("/user/{id}")
 	public static Array getUser(@PathVariable String id) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",

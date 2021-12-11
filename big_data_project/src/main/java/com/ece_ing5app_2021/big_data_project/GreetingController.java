@@ -148,7 +148,7 @@ private static int userID;
 		return false;
 	}
 	
-	@GetMapping("/user/{id}")
+	@RequestMapping("/user/{id}")
 	public static Array getUser(@PathVariable String id) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
