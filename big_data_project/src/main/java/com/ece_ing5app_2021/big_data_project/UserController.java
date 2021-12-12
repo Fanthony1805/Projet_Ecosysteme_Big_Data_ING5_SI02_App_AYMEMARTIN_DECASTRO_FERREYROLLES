@@ -57,6 +57,39 @@ public class UserController {
 		return "Couldn't add the user\n";
 	}
 	
+	@RequestMapping(method = RequestMethod.PUT, value = "/user", headers="Accept=application/json")
+	public String updateUser(@RequestBody HashMap<String,Object> user) {
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			CounterController.getValues();
+			
+			userID = "u" + Integer.toString(Counter.getNb_user() + 1);
+			
+			Put put = new Put(Bytes.toBytes(userID));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(user.get("username").toString()));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("email"), Bytes.toBytes(user.get("email").toString()));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("password"), Bytes.toBytes(user.get("password").toString()));
+
+			table.put(put);
+			
+			put = new Put(Bytes.toBytes(user.get("username").toString()));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("password"), Bytes.toBytes(user.get("password").toString()));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("ID"), Bytes.toBytes(userID));
+			
+			table.put(put);
+			
+			return "User successfully update\n";
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "Couldn't update the user\n";
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/login", headers="Accept=application/json")
 	public Boolean loginUser(@RequestBody HashMap<String,Object> user) {
 		try {

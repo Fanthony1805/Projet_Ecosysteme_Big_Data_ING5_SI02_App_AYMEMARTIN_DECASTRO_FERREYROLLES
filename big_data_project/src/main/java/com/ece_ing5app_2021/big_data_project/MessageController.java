@@ -57,6 +57,7 @@ public class MessageController {
 			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(username.toString()));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channelname));
 			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("content"), Bytes.toBytes(content));
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("created_at"), Bytes.toBytes(created_at));
 
 			table.put(put);
 			
@@ -71,14 +72,79 @@ public class MessageController {
 			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(username.toString()));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channelname));
 			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("content"), Bytes.toBytes(content));
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("created_at"), Bytes.toBytes(created_at));
 
 			table.put(put);
+			
+			CounterController.incrementMessageCounter();
 			
 			return "Message successfully added\n";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return "Couldn't add the message\n";
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, value = "/message", headers="Accept=application/json")
+	public String updateMessage(@RequestBody HashMap<String,Object> message) {
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			String userID = message.get("userID").toString();
+			String channelID = message.get("channelID").toString();
+			String content = message.get("content").toString();
+			String created_at = message.get("created_at").toString();
+			
+			CounterController.getValues();
+			
+			String messageID = "m" + Counter.getNb_message();
+			
+			HashMap	<String,Object> user = UserController.getUser(userID);
+			HashMap	<String,Object> channel = ChannelController.getChannel(channelID);
+			
+			String username = user.get("username").toString();
+			String channelname = channel.get("name").toString();
+			
+			Put put = new Put(Bytes.toBytes(messageID));
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("channelID"), Bytes.toBytes(channelID));
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("author"), Bytes.toBytes(username));
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("content"), Bytes.toBytes(content));
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("created_at"), Bytes.toBytes(created_at));
+
+			table.put(put);
+			
+			put = new Put(Bytes.toBytes(userID + "_" + channelID + "_" + messageID));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(username.toString()));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channelname));
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("content"), Bytes.toBytes(content));
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("created_at"), Bytes.toBytes(created_at));
+
+			table.put(put);
+			
+			/*put = new Put(Bytes.toBytes(channelID + "_" + userID + "_" + messageID));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(username.toString()));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channelname));
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("content"), Bytes.toBytes(content));
+
+			table.put(put);*/
+			
+			put = new Put(Bytes.toBytes(channelID + "_" + messageID));
+			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(username.toString()));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channelname));
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("content"), Bytes.toBytes(content));
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("created_at"), Bytes.toBytes(created_at));
+
+			table.put(put);
+			
+			return "Message successfully updated\n";
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "Couldn't update the message\n";
 	}
 	
 	@RequestMapping("/message/{id}")
