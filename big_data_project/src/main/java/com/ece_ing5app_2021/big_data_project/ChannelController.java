@@ -71,8 +71,8 @@ public class ChannelController {
 		return "Couldn't add the channel\n";
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "/channel", headers="Accept=application/json")
-	public String updateChannel(@RequestBody HashMap<String,Object> channel) {
+	@RequestMapping(method = RequestMethod.PUT, value = "/channel/{id}", headers="Accept=application/json")
+	public String updateChannel(@PathVariable String id, @RequestBody HashMap<String,Object> channel) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -82,7 +82,7 @@ public class ChannelController {
 			
 			CounterController.getValues();
 			
-			String channelID = "c" + Counter.getNb_channel();
+			String channelID = id;
 			
 			Put put = new Put(Bytes.toBytes(channelID));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(channel.get("userID").toString()));

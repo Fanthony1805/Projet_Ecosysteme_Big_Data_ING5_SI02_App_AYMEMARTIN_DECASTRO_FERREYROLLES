@@ -85,8 +85,8 @@ public class MessageController {
 		return "Couldn't add the message\n";
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "/message", headers="Accept=application/json")
-	public String updateMessage(@RequestBody HashMap<String,Object> message) {
+	@RequestMapping(method = RequestMethod.PUT, value = "/message/{id}", headers="Accept=application/json")
+	public String updateMessage(@PathVariable String id, @RequestBody HashMap<String,Object> message) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -101,7 +101,7 @@ public class MessageController {
 			
 			CounterController.getValues();
 			
-			String messageID = "m" + Counter.getNb_message();
+			String messageID = id;
 			
 			HashMap	<String,Object> user = UserController.getUser(userID);
 			HashMap	<String,Object> channel = ChannelController.getChannel(channelID);

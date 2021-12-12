@@ -57,8 +57,8 @@ public class UserController {
 		return "Couldn't add the user\n";
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "/user", headers="Accept=application/json")
-	public String updateUser(@RequestBody HashMap<String,Object> user) {
+	@RequestMapping(method = RequestMethod.PUT, value = "/user/{id}", headers="Accept=application/json")
+	public String updateUser(@PathVariable String id, @RequestBody HashMap<String,Object> user) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -68,7 +68,7 @@ public class UserController {
 			
 			CounterController.getValues();
 			
-			userID = "u" + Integer.toString(Counter.getNb_user() + 1);
+			userID = id;
 			
 			Put put = new Put(Bytes.toBytes(userID));
 			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(user.get("username").toString()));
