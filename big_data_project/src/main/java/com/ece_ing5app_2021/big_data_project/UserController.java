@@ -1,8 +1,6 @@
 package com.ece_ing5app_2021.big_data_project;
 
 import java.io.IOException;
-import java.sql.Array;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import org.apache.hadoop.hbase.TableName;
@@ -12,15 +10,11 @@ import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.google.gson.JsonObject;
 
 @RestController
 public class UserController {
@@ -58,11 +52,11 @@ public class UserController {
 			
 			CounterController.incrementUserCounter();
 			
-			return "Value successfully added\n";
+			return "User successfully added\n";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "Couldn't add the value\n";
+		return "Couldn't add the user\n";
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login", headers="Accept=application/json")
@@ -82,9 +76,6 @@ public class UserController {
 
 			byte[] value = result.getValue(Bytes.toBytes("user"), Bytes.toBytes("password"));
 			String user_password = Bytes.toString(value);
-			
-			System.out.println("Pass 1 = " + user_password);
-			System.out.println("Pass 2 = " + user.get("password").toString());
 			
 			return user_password.equals(user.get("password").toString());
 		} catch (IOException e) {
@@ -114,8 +105,6 @@ public class UserController {
 			
 			value = result.getValue(Bytes.toBytes("user"), Bytes.toBytes("password"));
 			String user_password = Bytes.toString(value);
-			
-			System.out.println("username = " + username);
 			
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("username", username);
