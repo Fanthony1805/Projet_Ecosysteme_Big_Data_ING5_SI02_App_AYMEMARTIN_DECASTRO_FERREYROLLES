@@ -77,15 +77,14 @@ public class CounterController {
 
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
 			
-			// Instantiating Get class
+			int value = Counter.getNb_channel() + 1;
+			
 			Put put = new Put(Bytes.toBytes("counter"));
 
-			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("nb_channel"), Bytes.toBytes(Counter.getNb_channel() + 1));
-			//Add as many columns as you want
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("nb_channel"), Bytes.toBytes(Integer.toString(value)));
 
 			table.put(put);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -98,15 +97,14 @@ public class CounterController {
 
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
 			
-			// Instantiating Get class
+			int value = Counter.getNb_message() + 1;
+			
 			Put put = new Put(Bytes.toBytes("counter"));
 
-			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("nb_message"), Bytes.toBytes(Counter.getNb_message() + 1));
-			//Add as many columns as you want
+			put.addColumn(Bytes.toBytes("message"), Bytes.toBytes("nb_message"), Bytes.toBytes(Integer.toString(value)));
 
 			table.put(put);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
