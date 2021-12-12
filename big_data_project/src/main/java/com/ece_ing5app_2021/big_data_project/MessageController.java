@@ -2,13 +2,19 @@ package com.ece_ing5app_2021.big_data_project;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.filter.BinaryPrefixComparator;
+import org.apache.hadoop.hbase.filter.RowFilter;
+import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+@SuppressWarnings("deprecation")
 @RestController
 public class MessageController {
 	private static Connection conn;
@@ -245,6 +252,39 @@ public class MessageController {
 			map.put("username", username);
 		    map.put("channelname", channelname);
 		    map.put("content", content);
+			
+			return map;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@RequestMapping("/channel/{id}/getmessages")
+	public static HashMap<String,Object> addUserToChannel(@PathVariable String id) {
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			Scan scan = new Scan();
+			RowFilter rowFilter = new RowFilter(CompareOp.EQUAL, new BinaryPrefixComparator(Bytes.toBytes(id + "_")));
+			
+			scan.setFilter(rowFilter);
+	        ResultScanner scanner = table.getScanner(scan);
+	        Iterator<Result> iterator = scanner.iterator();
+	        HashMap<String, Object> map = new HashMap<>();
+	        int i = 0;
+	        while (iterator.hasNext()) {
+	            Result result = iterator.next();
+	            String rowkey = Bytes.toString(result.getRow());
+	            if(!rowkey.contains("u")) {
+	            	map.put("message" + i, rowkey);
+	            	i++;
+	            }
+	        }
 			
 			return map;
 		} catch (IOException e) {
