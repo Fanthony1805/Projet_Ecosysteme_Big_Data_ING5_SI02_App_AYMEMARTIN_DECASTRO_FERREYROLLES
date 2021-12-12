@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Put;
@@ -50,11 +51,11 @@ public class ChannelController {
 
 			table.put(put);
 			
-			/*put = new Put(Bytes.toBytes(channelID + "_" + userID));
+			put = new Put(Bytes.toBytes(channelID + "_" + channel.get("userID").toString()));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(username.toString()));
-			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channelname));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channel.get("name").toString()));
 
-			table.put(put);*/
+			table.put(put);
 			
 			put = new Put(Bytes.toBytes(channel.get("name").toString()));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(channel.get("userID").toString()));
@@ -100,11 +101,11 @@ public class ChannelController {
 
 			table.put(put);
 			
-			/*put = new Put(Bytes.toBytes(channelID + "_" + userID));
+			put = new Put(Bytes.toBytes(channelID + "_" + channel.get("userID").toString()));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(username.toString()));
-			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channelname));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channel.get("name").toString()));
 
-			table.put(put);*/
+			table.put(put);
 			
 			put = new Put(Bytes.toBytes(channel.get("name").toString()));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(channel.get("userID").toString()));
@@ -207,5 +208,54 @@ public class ChannelController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@RequestMapping("/channel/{id}/user/{userID}")
+	public static HashMap<String,Object> addUserToChannel(@PathVariable String userID,@PathVariable String id) {
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			Get g = new Get(Bytes.toBytes(id + "_" + userID));
+
+			Result result = table.get(g);
+
+			byte[] value = result.getValue(Bytes.toBytes("channel"), Bytes.toBytes("name"));
+			String channelname = Bytes.toString(value);
+			
+			value = result.getValue(Bytes.toBytes("channel"), Bytes.toBytes("owner"));
+			String owner = Bytes.toString(value);
+			
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("name", channelname);
+		    map.put("owner", owner);
+			
+			return map;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@RequestMapping("/channel/{id}/removeuser/{userID}")
+	public static String removeUserOfChannel(@PathVariable String userID,@PathVariable String id) {
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			Admin admin = conn.getAdmin();
+			admin.deleteColumnFamily(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"), Bytes.toBytes(id + "_" + userID));
+			
+			return "User successfully removed from channel\n";
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "Couldn't remove user from channel\n";
 	}
 }
