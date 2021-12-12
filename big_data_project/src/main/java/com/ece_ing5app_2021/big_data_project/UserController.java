@@ -57,7 +57,7 @@ public class UserController {
 		return "Couldn't add the user\n";
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "/user/{id}", headers="Accept=application/json")
+	@RequestMapping(method = RequestMethod.PUT, value = "/edituser/{id}", headers="Accept=application/json")
 	public String updateUser(@PathVariable String id, @RequestBody HashMap<String,Object> user) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
