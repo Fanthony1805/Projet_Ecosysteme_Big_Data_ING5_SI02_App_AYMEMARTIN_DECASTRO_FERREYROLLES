@@ -3,10 +3,8 @@ package com.ece_ing5app_2021.big_data_project;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
@@ -25,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+@SuppressWarnings("deprecation")
 @RestController
 public class ChannelController {
 	private static Connection conn;
