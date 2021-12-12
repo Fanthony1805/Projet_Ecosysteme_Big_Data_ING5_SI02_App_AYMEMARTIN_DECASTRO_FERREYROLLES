@@ -11,6 +11,7 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,7 @@ public class ChannelController {
 	private static Table table;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/channel", headers="Accept=application/json")
-	public String createChannel(@RequestParam String userID, @RequestParam String channelname) {
+	public String createChannel(@RequestBody HashMap<String,Object> channel) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -35,18 +36,18 @@ public class ChannelController {
 			String channelID = "c" + Counter.getNb_channel();
 			
 			Put put = new Put(Bytes.toBytes(channelID));
-			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(userID));
-			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channelname));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(channel.get("userID").toString()));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channel.get("name").toString()));
 
 			table.put(put);
 			
-			HashMap<String,Object> user = UserController.getUser(userID);
+			HashMap<String,Object> user = UserController.getUser(channel.get("userID").toString());
 			
 			Object username = user.get("username");
 			
-			put = new Put(Bytes.toBytes(userID + "_" + channelID));
+			put = new Put(Bytes.toBytes(channel.get("userID").toString() + "_" + channelID));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(username.toString()));
-			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channelname));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channel.get("name").toString()));
 
 			table.put(put);
 			
@@ -56,8 +57,8 @@ public class ChannelController {
 
 			table.put(put);*/
 			
-			put = new Put(Bytes.toBytes(channelname));
-			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(userID));
+			put = new Put(Bytes.toBytes(channel.get("name").toString()));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(channel.get("userID").toString()));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("id"), Bytes.toBytes(channelID));
 
 			table.put(put);

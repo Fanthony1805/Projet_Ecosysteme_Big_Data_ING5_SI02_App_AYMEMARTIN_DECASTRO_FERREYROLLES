@@ -11,6 +11,7 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,13 +23,18 @@ public class MessageController {
 	private static Table table;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/message", headers="Accept=application/json")
-	public String createMessage(@RequestParam String channelID, @RequestParam String userID, @RequestParam String content, @RequestParam String created_at) {
+	public String createMessage(@RequestBody HashMap<String,Object> message) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
 					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
 
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			String userID = message.get("userID").toString();
+			String channelID = message.get("channelID").toString();
+			String content = message.get("content").toString();
+			String created_at = message.get("created_at").toString();
 			
 			CounterController.getValues();
 			
