@@ -71,7 +71,7 @@ public class ChannelController {
 		return "Couldn't add the channel\n";
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "/channel/{id}", headers="Accept=application/json")
+	@RequestMapping(method = RequestMethod.PUT, value = "/editchannel/{id}", headers="Accept=application/json")
 	public String updateChannel(@PathVariable String id, @RequestBody HashMap<String,Object> channel) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",

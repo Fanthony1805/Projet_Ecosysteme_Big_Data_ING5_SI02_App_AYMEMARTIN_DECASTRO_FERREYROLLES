@@ -85,7 +85,7 @@ public class MessageController {
 		return "Couldn't add the message\n";
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "/message/{id}", headers="Accept=application/json")
+	@RequestMapping(method = RequestMethod.PUT, value = "/editmessage/{id}", headers="Accept=application/json")
 	public String updateMessage(@PathVariable String id, @RequestBody HashMap<String,Object> message) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
