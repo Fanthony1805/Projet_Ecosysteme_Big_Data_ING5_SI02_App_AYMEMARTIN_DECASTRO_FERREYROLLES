@@ -99,7 +99,7 @@ public class ChannelController {
 		return null;
 	}
 	
-	@RequestMapping("/channel/{channelname}")
+	@RequestMapping("/channelname/{channelname}")
 	public static HashMap<String,Object> getChannelByName(@PathVariable String channelname) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",

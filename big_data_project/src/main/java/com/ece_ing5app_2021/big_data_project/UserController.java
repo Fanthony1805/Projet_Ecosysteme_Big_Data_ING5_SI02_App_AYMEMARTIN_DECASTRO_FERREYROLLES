@@ -116,7 +116,7 @@ public class UserController {
 		return null;
 	}
 	
-	@RequestMapping("/user/{username}")
+	@RequestMapping("/username/{username}")
 	public static HashMap<String,Object> getUserByName(@PathVariable String username) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
