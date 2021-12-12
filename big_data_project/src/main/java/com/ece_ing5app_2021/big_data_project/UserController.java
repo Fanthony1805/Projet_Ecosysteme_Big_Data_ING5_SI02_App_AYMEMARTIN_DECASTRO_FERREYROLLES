@@ -35,8 +35,6 @@ public class UserController {
 			
 			userID = "u" + Integer.toString(Counter.getNb_user() + 1);
 			
-			
-			
 			Put put = new Put(Bytes.toBytes(userID));
 			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(user.get("username").toString()));
 			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("email"), Bytes.toBytes(user.get("email").toString()));
@@ -109,6 +107,36 @@ public class UserController {
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("username", username);
 		    map.put("email", user_email);
+		    map.put("password", user_password);
+			
+			return map;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@RequestMapping("/user/{username}")
+	public static HashMap<String,Object> getUserByName(@PathVariable String username) {
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			Get g = new Get(Bytes.toBytes(username));
+
+			Result result = table.get(g);
+
+			byte[] value = result.getValue(Bytes.toBytes("user"), Bytes.toBytes("ID"));
+			String id = Bytes.toString(value);
+			
+			value = result.getValue(Bytes.toBytes("user"), Bytes.toBytes("password"));
+			String user_password = Bytes.toString(value);
+			
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("ID", id);
 		    map.put("password", user_password);
 			
 			return map;

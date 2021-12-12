@@ -19,11 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ChannelController {
 	private static Connection conn;
-	// Instantiating HTable class
 	private static Table table;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/channel", headers="Accept=application/json")
-	public String putMessage(@RequestParam String userID, @RequestParam String channelname) {
+	public String createChannel(@RequestParam String userID, @RequestParam String channelname) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -45,17 +44,17 @@ public class ChannelController {
 			
 			Object username = user.get("username");
 			
-			put = new Put(Bytes.toBytes(userID +"_" + channelID));
-			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(username.toString()));
+			put = new Put(Bytes.toBytes(userID + "_" + channelID));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(username.toString()));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channelname));
 
 			table.put(put);
 			
-			put = new Put(Bytes.toBytes(channelID +"_" + userID));
-			put.addColumn(Bytes.toBytes("user"), Bytes.toBytes("username"), Bytes.toBytes(username.toString()));
+			/*put = new Put(Bytes.toBytes(channelID + "_" + userID));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(username.toString()));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("name"), Bytes.toBytes(channelname));
 
-			table.put(put);
+			table.put(put);*/
 			
 			put = new Put(Bytes.toBytes(channelname));
 			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(userID));
@@ -71,7 +70,7 @@ public class ChannelController {
 	}
 	
 	@RequestMapping("/channel/{id}")
-	public static HashMap<String,Object> getUser(@PathVariable String id) {
+	public static HashMap<String,Object> getChannel(@PathVariable String id) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -80,6 +79,66 @@ public class ChannelController {
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
 			
 			Get g = new Get(Bytes.toBytes(id));
+
+			Result result = table.get(g);
+
+			byte[] value = result.getValue(Bytes.toBytes("channel"), Bytes.toBytes("name"));
+			String channelname = Bytes.toString(value);
+			
+			value = result.getValue(Bytes.toBytes("channel"), Bytes.toBytes("owner"));
+			String owner = Bytes.toString(value);
+			
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("name", channelname);
+		    map.put("owner", owner);
+			
+			return map;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@RequestMapping("/channel/{channelname}")
+	public static HashMap<String,Object> getChannelByName(@PathVariable String channelname) {
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			Get g = new Get(Bytes.toBytes(channelname));
+
+			Result result = table.get(g);
+
+			byte[] value = result.getValue(Bytes.toBytes("channel"), Bytes.toBytes("id"));
+			String id = Bytes.toString(value);
+			
+			value = result.getValue(Bytes.toBytes("channel"), Bytes.toBytes("owner"));
+			String owner = Bytes.toString(value);
+			
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("id", id);
+		    map.put("owner", owner);
+			
+			return map;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@RequestMapping("/user/{userID}/channel/{id}")
+	public static HashMap<String,Object> getChannel(@PathVariable String userID,@PathVariable String id) {
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			Get g = new Get(Bytes.toBytes(userID + "_" + id));
 
 			Result result = table.get(g);
 
