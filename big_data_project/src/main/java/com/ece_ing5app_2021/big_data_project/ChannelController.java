@@ -280,7 +280,9 @@ public class ChannelController {
 	        while (iterator.hasNext()) {
 	            Result result = iterator.next();
 	            String rowkey = Bytes.toString(result.getRow());
-	            rowkeys.add(rowkey);
+	            if(!rowkey.contains("m")) {
+	            	rowkeys.add(rowkey);
+	            }
 	        }
 	        System.out.println(rowkeys);
 			
