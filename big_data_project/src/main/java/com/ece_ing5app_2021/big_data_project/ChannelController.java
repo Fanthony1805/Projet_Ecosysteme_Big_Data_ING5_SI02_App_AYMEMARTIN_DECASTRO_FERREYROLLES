@@ -286,7 +286,6 @@ public class ChannelController {
 	            	i++;
 	            }
 	        }
-	        System.out.println(map);
 			
 			return map;
 		} catch (IOException e) {
