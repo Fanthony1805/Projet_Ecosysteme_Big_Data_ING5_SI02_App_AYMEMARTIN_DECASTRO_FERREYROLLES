@@ -2,6 +2,8 @@ package com.ece_ing5app_2021.big_data_project;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Admin;
@@ -9,7 +11,12 @@ import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.filter.BinaryPrefixComparator;
+import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
+import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -210,8 +217,8 @@ public class ChannelController {
 		return null;
 	}
 	
-	@RequestMapping("/channel/{id}/user/{userID}")
-	public static HashMap<String,Object> addUserToChannel(@PathVariable String userID,@PathVariable String id) {
+	@RequestMapping("/channel/{id}/adduser/{userID}")
+	public static String addUserToChannel(@PathVariable String userID,@PathVariable String id) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -219,25 +226,19 @@ public class ChannelController {
 
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
 			
-			Get g = new Get(Bytes.toBytes(id + "_" + userID));
+			Put put = new Put(Bytes.toBytes(id + "_" + userID));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(userID));
 
-			Result result = table.get(g);
-
-			byte[] value = result.getValue(Bytes.toBytes("channel"), Bytes.toBytes("name"));
-			String channelname = Bytes.toString(value);
+			table.put(put);
 			
-			value = result.getValue(Bytes.toBytes("channel"), Bytes.toBytes("owner"));
-			String owner = Bytes.toString(value);
+			put = new Put(Bytes.toBytes(userID + "_" + id));
+			put.addColumn(Bytes.toBytes("channel"), Bytes.toBytes("owner"), Bytes.toBytes(userID));
 			
-			HashMap<String, Object> map = new HashMap<>();
-			map.put("name", channelname);
-		    map.put("owner", owner);
-			
-			return map;
+			return "User added\n";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return "Couldn't add the user to the channel\n";
 	}
 	
 	@RequestMapping("/channel/{id}/removeuser/{userID}")
@@ -251,11 +252,42 @@ public class ChannelController {
 			
 			Admin admin = conn.getAdmin();
 			admin.deleteColumnFamily(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"), Bytes.toBytes(id + "_" + userID));
+			admin.deleteColumnFamily(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"), Bytes.toBytes(userID + "_" + id));
 			
 			return "User successfully removed from channel\n";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return "Couldn't remove user from channel\n";
+	}
+	
+	@RequestMapping("/channel/{id}/getusers")
+	public static String addUserToChannel(@PathVariable String id) {
+		try {
+			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
+					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
+
+			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			
+			Scan scan = new Scan();
+			RowFilter rowFilter = new RowFilter(CompareOp.EQUAL, new BinaryPrefixComparator(Bytes.toBytes(id + "_")));
+			
+			scan.setFilter(rowFilter);
+	        ResultScanner scanner = table.getScanner(scan);
+	        Iterator<Result> iterator = scanner.iterator();
+	        LinkedList<String> rowkeys = new LinkedList<>();
+	        while (iterator.hasNext()) {
+	            Result result = iterator.next();
+	            String rowkey = Bytes.toString(result.getRow());
+	            rowkeys.add(rowkey);
+	        }
+	        System.out.println(rowkeys);
+			
+			return "Done\n";
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "Couldn't get the channel's owners\n";
 	}
 }
