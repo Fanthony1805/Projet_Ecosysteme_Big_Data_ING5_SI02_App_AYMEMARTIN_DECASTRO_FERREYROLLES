@@ -283,6 +283,7 @@ public class ChannelController {
 	            String rowkey = Bytes.toString(result.getRow());
 	            if(!rowkey.contains("m")) {
 	            	map.put("owner" + i, rowkey);
+	            	i++;
 	            }
 	        }
 	        System.out.println(map);
