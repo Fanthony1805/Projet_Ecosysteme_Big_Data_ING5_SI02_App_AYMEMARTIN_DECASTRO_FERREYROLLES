@@ -262,7 +262,7 @@ public class ChannelController {
 	}
 	
 	@RequestMapping("/channel/{id}/getusers")
-	public static String addUserToChannel(@PathVariable String id) {
+	public static HashMap<String,Object> addUserToChannel(@PathVariable String id) {
 		try {
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
@@ -276,20 +276,21 @@ public class ChannelController {
 			scan.setFilter(rowFilter);
 	        ResultScanner scanner = table.getScanner(scan);
 	        Iterator<Result> iterator = scanner.iterator();
-	        LinkedList<String> rowkeys = new LinkedList<>();
+	        HashMap<String, Object> map = new HashMap<>();
+	        int i = 0;
 	        while (iterator.hasNext()) {
 	            Result result = iterator.next();
 	            String rowkey = Bytes.toString(result.getRow());
 	            if(!rowkey.contains("m")) {
-	            	rowkeys.add(rowkey);
+	            	map.put("owner" + i, rowkey);
 	            }
 	        }
-	        System.out.println(rowkeys);
+	        System.out.println(map);
 			
-			return "Done\n";
+			return map;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "Couldn't get the channel's owners\n";
+		return null;
 	}
 }
