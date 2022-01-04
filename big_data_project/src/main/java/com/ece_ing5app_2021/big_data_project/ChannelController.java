@@ -32,11 +32,18 @@ public class ChannelController {
 	@RequestMapping(method = RequestMethod.POST, value = "/channel", headers="Accept=application/json")
 	public String createChannel(@RequestBody HashMap<String,Object> channel) {
 		try {
+			//without docker
 			conn = HbaseConnector.getConnectionByFile("/home/a.ferreyrolles-ece/mykey.keytab",
 					"/etc/hadoop/conf/core-site.xml", "/etc/krb5.conf", "/etc/hbase/conf/hbase-site.xml",
 					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
-
+					
+			// with docker	
+			/*	
+			conn = HbaseConnector.getConnectionByFile("mykey.keytab",
+					"core-site.xml", "krb5.conf", "hbase-site.xml",
+					"a.ferreyrolles-ece@AU.ADALTAS.CLOUD");
 			table = conn.getTable(TableName.valueOf("ece_2021_fall_app_2:AFerreyrolles"));
+			*/
 			
 			CounterController.getValues();
 			
