@@ -1,0 +1,362 @@
+.man {
+    background: url("../avatars/man.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+
+.man:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.woman {
+    background: url("../avatars/profile.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.woman:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.princess {
+    background: url("../avatars/princess.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.princess:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.hippie {
+    background: url("../avatars/hippie.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.hippie:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.dancer {
+    background: url("../avatars/dancer.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.dancer:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.dancing {
+    background: url("../avatars/dancing.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.dancing:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.elf {
+    background: url("../avatars/elf.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.elf:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.ninja {
+    background: url("../avatars/ninja.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.ninja:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.queen {
+    background: url("../avatars/queen.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.queen:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.vampire {
+    background: url("../avatars/vampire.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.vampire:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.cat {
+    background: url("../avatars/cat.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.cat:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.dog {
+    background: url("../avatars/dog.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.dog:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.fox {
+    background: url("../avatars/fox.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.fox:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.owl {
+    background: url("../avatars/owl.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.owl:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.elephant {
+    background: url("../avatars/elephant.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.elephant:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.koala {
+    background: url("../avatars/koala.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.koala:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.diplodocus {
+    background: url("../avatars/diplodocus.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.diplodocus:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.clown {
+    background: url("../avatars/clown.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.clown:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.tyrannosaurus {
+    background: url("../avatars/tyrannosaurus.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.tyrannosaurus:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.turtle {
+    background: url("../avatars/turtle.png") no-repeat;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .2cm; 
+    margin-top: .2cm;
+    margin-right: .2cm;
+}
+.turtle:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.defaultSize {
+    background-position: center;
+    background-size: 4cm;
+    height: 4cm;
+    width: 4cm;
+    border: none;
+    margin-left: 1.5cm;
+}
+
+.default {
+    background: url("../avatars/user.png") no-repeat;
+    background-size: 4cm;
+    height: 4cm;
+    width: 4cm;
+    border: none;
+    margin-left: 1.5cm;
+}
+.default:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.smallSize {
+    background-size: 1cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin-left: .5cm; 
+}
+
+.smallSize:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.userAvatar {
+    height: 4cm;
+    width: 4cm;
+}

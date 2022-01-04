@@ -1,0 +1,11 @@
+.Login
+{
+    align-items: center;
+    text-align: center;
+	display: block;
+	width: 5cm;
+	float: left;
+    font-weight: bold;
+    margin-left: .2cm;
+    margin-right: .2cm;
+}

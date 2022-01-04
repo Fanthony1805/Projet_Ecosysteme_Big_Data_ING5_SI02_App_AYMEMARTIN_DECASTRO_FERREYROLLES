@@ -1,0 +1,17 @@
+h3 {
+    text-align: center;
+}
+
+.homePage {
+    text-align: center;
+    align-items: center;
+    height:25cm;
+}
+
+.homeTitle {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.homeText {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}

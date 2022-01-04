@@ -1,0 +1,12 @@
+.footer {
+    flex-shrink: 0;
+    margin: .5cm;
+    height: 1cm;
+    position:fixed;
+    bottom:0;
+}
+
+.right {
+    text-align: right;
+    display: flex;
+}

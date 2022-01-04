@@ -1,0 +1,75 @@
+  
+.header {
+    height: auto;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.GoToHome {
+    background: url("../Icons/home.png") no-repeat;
+    background-position: center;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+}
+
+.GoToHome:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.GoToChannels {
+    background: url("../Icons/conversation.png") no-repeat;
+    background-position: center;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    margin-left: 5mm;
+    border: none;
+}
+
+.GoToChannels:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.GoToAccount {
+    background: url("../Icons/round-account-button-with-user-inside.png") no-repeat;
+    background-position: center;
+    background-size: .8cm;
+    height: 1cm;
+    width: 1cm;
+    border: none;
+    margin: 5mm;
+    margin-right: 10mm;
+}
+
+.GoToAccount:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.LogOutnButton {
+    background: url("../Icons/exit.png") no-repeat;
+    background-position: center;
+    background-size: .6cm;
+    height: .6cm;
+    width: .6cm;
+    border: none;
+    margin-left: .3cm;
+    margin-right: .1cm;
+}
+
+.LogOutnButton:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}

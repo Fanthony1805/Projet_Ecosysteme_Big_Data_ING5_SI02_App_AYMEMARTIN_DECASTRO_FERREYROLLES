@@ -1,0 +1,244 @@
+.channelButton {
+    background:local;
+    width: 35mm;
+    border: none;
+    font-weight: bold;
+    font-size: 4mm;
+}
+
+.channelButton:hover {
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+.channels {
+    min-width: 200;
+    text-align: center;
+    height: 3cm;
+    overflow-y: scroll;
+}
+
+.edit {
+    background: url(../Icons/edit.png) no-repeat;
+    background-position: center;
+    background-size: .4cm;
+    height: 0.4cm;
+    width: 0.4cm;
+    margin-left: 2mm;
+    border: none;
+    align-items: center;
+    text-align: center;
+}
+
+.edit:hover {
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+.delete {
+    background: url(../Icons/trash.png) no-repeat;
+    background-position: center;
+    background-size: .4cm;
+    height: 0.4cm;
+    width: 0.4cm;
+    margin-left: 2mm;
+    margin-right: 2mm;
+    border: none;
+    align-items: center;
+    text-align: center;
+}
+
+.delete:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: lightblue;
+}
+
+.done {
+    background: url(../Icons/checked.png) no-repeat;
+    background-position: center;
+    background-size: .4cm;
+    height: 0.4cm;
+    width: 0.4cm;
+    margin-left: 5mm;
+    border: none;
+    align-items: center;
+    text-align: center;
+}
+
+.done:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: lightblue;
+}
+
+.cancel {
+    background: url(../Icons/Cancel.png) no-repeat;
+    background-position: center;
+    background-size: .4cm;
+    height: 0.4cm;
+    width: 0.4cm;
+    margin-left: 5mm;
+    border: none;
+    align-items: center;
+    text-align: center;
+}
+
+.cancel:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: lightblue;
+}
+
+.addChannelsButton {
+    background: url(../Icons/add.png) no-repeat;
+    background-position: center;
+    background-size: 0.4cm;
+    height: 0.4cm;
+    width: 0.4cm;
+    margin-left: 3mm;
+    border: none;
+    align-items: center;
+    text-align: center;
+}
+
+.addChannelsButton:hover {
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+.addChannelText {
+    align-items: center;
+    height: 0.5cm;
+    margin-left: 0.2cm;
+    width: 200px;
+}
+
+.addPeople {
+    background: url(../Icons/add-group.png) no-repeat;
+    background-position: center;
+    background-size: .4cm;
+    height: 0.4cm;
+    width: 0.4cm;
+    margin-left: 2mm;
+    border: none;
+    align-items: center;
+    text-align: center;
+}
+
+.addPeople:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: lightblue;
+}
+
+.info {
+    background: url(../Icons/information.png) no-repeat;
+    background-position: center;
+    background-size: .4cm;
+    height: 0.4cm;
+    width: 0.4cm;
+    margin-left: 2mm;
+    border: none;
+    align-items: center;
+    text-align: center;
+}
+
+.info:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: lightblue;
+}
+
+.form-container {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  width: 400px;
+  padding: 10px;
+  background-color: white;
+}
+
+.form-container input[type=text]{
+  width: 350px;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+.form-container .btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+.form-container .Cancel {
+  background-color: red;
+}
+
+.form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+}
+
+.popup {
+    background:rgba(0,0,0,.4);
+    cursor:pointer;
+    height:100%;
+    position:fixed;
+    text-align:center;
+    top:0;
+    width:100%;
+    z-index:10000;
+    visibility: hidden;
+}
+
+.popup .helper {
+    display:inline-block;
+    height:100%;
+    vertical-align:middle;
+}
+
+.popup > div {
+    background-color: #fff;
+    box-shadow: 10px 10px 60px #555;
+    display: inline-block;
+    height: auto;
+    max-width: 551px;
+    min-height: 100px;
+    vertical-align: middle;
+    width: 60%;
+    position: relative;
+    border-radius: 8px;
+    padding: 15px 5%;
+}
+
+.popupCloseButton {
+    background-color: #fff;
+    border: 3px solid #999;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial;
+    font-weight: bold;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 25px;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.popupCloseButton:hover {
+    background-color: #ccc;
+}

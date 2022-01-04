@@ -4,7 +4,13 @@ This is a java microservice application we developed using Spring boot.
 It's an API for an HBase database configured for the adaltas cluster. We created the api routes for a chat application we developed last year in react as a proof of concept. But as we don't have access to the Adaltas edge we couldn't use the frontend with the microservice to test it and we couldn't test as the docker containerization either.
 
 ## Usage
-First clone the repo in the edge.
+First you can clone the repo in the edge, or you can just put the built jar in the edge
+
+To build the jar
+```bash
+./mvnw package
+```
+the jar is in the target folder
 
 Generate a keytab for kerberos authentification
 ```bash
@@ -12,15 +18,23 @@ ipa-getkeytab -p [username] -k mykey.keytab -P
 ```
 then, in all of the calls for `HbaseConnector.getConnectionByFile` in all the controllers classes, change the kerberos principal. 
 
-Start the microservice without docker containerization :
+Go to the big_data_project folder
+
+### Start the microservice without docker containerization :
+
+To start from the cloned repo
 ```bash
 ./mvnw spring-boot:run
 ```
+to start from a jar
+```bash
+java -jar [jarfile]
+```
 
-### Start the microservice with docker containerization
+### Start the microservice with docker containerization :
 
 First Change the keytab Path in the dockerfile.
-then, in all of the calls for `HbaseConnector.getConnectionByFile` in all the controllers classes, change comment the "without docker" section, and uncomment the "with docker" one.
+then, in all of the calls for `HbaseConnector.getConnectionByFile` in all the controllers classes, comment the "without docker" section, and uncomment the "with docker" one.
 
 Build th docker image :
 ```bash
@@ -33,6 +47,15 @@ docker run big_data_project -p 8080
 
 No idea if it works.
 
+### Start the React Front End
+go to the FrontEnd folder
+```bash
+npm install 
+```
+```bash
+npm start
+```
+No idea if it works
 
 
 ## HBase model:
@@ -64,7 +87,7 @@ GET : /user/:username
  ```
 user of id :id
  ```
-GET : /users/:id
+GET : /user/:id
  ```
 
 ### Update :

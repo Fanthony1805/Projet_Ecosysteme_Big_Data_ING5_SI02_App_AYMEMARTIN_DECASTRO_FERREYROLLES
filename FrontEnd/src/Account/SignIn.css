@@ -1,0 +1,21 @@
+.SignIn
+{
+	align-items: center;
+    text-align: center;
+    font-weight: bold;
+}
+
+.block {
+    display:inline-flex;
+}
+
+.block .left {
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    margin-right: .1cm;
+}
+
+.block .button {
+    margin-right: 3cm;
+}

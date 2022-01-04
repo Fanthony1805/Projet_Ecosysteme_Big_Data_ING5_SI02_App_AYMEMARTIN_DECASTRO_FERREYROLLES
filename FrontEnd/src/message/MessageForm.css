@@ -1,0 +1,28 @@
+.form {
+    padding: 1rem;
+    display: flex;
+}
+
+.content {
+    flex: 1 1 auto;
+    margin-right: 2rem;
+}
+
+.send {
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#E5F392", endColorstr="#E49E71", GradientType=1 );
+    border: none;
+    background: url("../Icons/paper-plane.png") no-repeat;
+    background-position: center;
+    background-size: 50px;
+    height: 80px;
+    width: 80px;
+    align-items: center;
+    padding: 1rem;
+}
+
+.send:hover {
+    background-color: lightblue;
+    cursor: pointer;
+    color: #fff;
+}
