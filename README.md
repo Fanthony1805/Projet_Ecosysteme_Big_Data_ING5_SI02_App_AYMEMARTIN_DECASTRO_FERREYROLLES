@@ -106,7 +106,7 @@ GET : /channel/:id
  ```
  channel of id :id owned by user :userID
  ```
- /user/:userID/channel/:id
+GET : /user/:userID/channel/:id
  ```
 
 ### Update :
@@ -123,16 +123,16 @@ put a json object in the body with name and owner to change the name and owner
 ```
 ### Add user to channel
 ```
-/channel/:id/adduser/:userID
+GET : /channel/:id/adduser/:userID
 ```
 ### Remove user from channel
 ```
-/channel/:id/removeuser/:userID
+GET : /channel/:id/removeuser/:userID
 ```
 
 ### Get user from channel
 ```
-/channel/:id/getusers
+GET : /channel/:id/getusers
 ```
 
 ## Message
